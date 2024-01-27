@@ -1,63 +1,45 @@
 "use strict";
 
-/* function showMessage(from = "No user given.", text = "No text given."){
-	alert(String(from) + ": " + String(text));
+// Using "this" in an object literal.
+function makeUser(){
+	return {name: "John", ref: this};
 }
 
-showMessage();
-showMessage();
+let user = makeUser();
+alert(user.ref.name); // Undefined access.
 
-let user = new Object();
-user = {name: "John", age: 30};
-alert(user.name);
-alert(user.age);
-delete user.name;
-delete user.age;
+// Create a calculator.
+let calculator = new Object();
+calculator.read = function(){
+	this.a = Number(prompt("Value of a:", 10));
+	this.b = Number(prompt("Value of b:", 20));
+};
+calculator.sum = function(){
+	return this.a + this.b;
+};
+calculator.mul = function(){
+	return this.a * this.b;
+};
 
-user["likes birds"] = true;
-alert(user["likes birds"]);
-delete user["likes birds"];
+calculator.read();
+alert(calculator.sum());
+alert(calculator.mul());
 
-let key = "likes birds";
-user[key] = true;
-
-key = prompt("What would you like to know about the user?", "name");
-alert(user[key]);
-
-let fruit = prompt("Which fruit to buy?", "apple");
-let bag = {[fruit]: 5};
-alert(bag["apple"]);
-
-alert("name" in user);
-alert("age" in user);
-alert("blabla" in user);
-
-for(let key in user){
-	alert(user[key] + " is being deleted!");
-	delete user[key];
-} */
-
-let user = {};
-user.name = "John";
-user.surname = "Smith";
-user.name = "Pete";
-delete user.name;
-
-function isEmpty(object){
-	for(let key in object) return false;
-	return true;
-}
-
-let salaries = {John: 100, Ann: 160, Pete: 130};
-let sum = 0;
-for(let key in salaries){
-	sum += salaries[key];
-}
-
-function multiplyNumeric(object){
-	for(let key in object){
-		if(typeof object[key] === 'number'){
-			object[key] *= 2;
-		}
+// Chaining.
+let ladder = {
+	step: 0,
+	up(){
+		this.step++;
+		return this;
+	},
+	down(){
+		this.step--;
+		return this;
+	},
+	showStep: function(){
+		alert(this.step);
+		return this;
 	}
-}
+};
+
+ladder.up().up().down().showStep().down().showStep();
