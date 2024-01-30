@@ -1,34 +1,41 @@
 "use strict";
 
-/* Uppercase the first character. */
-function ucFirst(string){
-	if(string.length > 0) return string[0].toUpperCase() + string.slice(1); else return "";
+/* Is array copied? */
+let fruits = ["Apples", "Pear", "Orange"];
+let shoppingCart = fruits;
+shoppingCart.push("Banana");
+alert(fruits.length); /* Will alert 4. */
+
+/* Array operations. */
+let styles = ["Jazz", "Blues"];
+styles.push("Rock-n-Roll");
+styles[Math.ceil(styles.length / 2)] = "Classic";
+alert(styles.shift());
+styles.unshift("Rap", "Reggae");
+
+/* Calling in an array context. */
+let arr = ["a", "b"];
+arr.push(function(){alert(this);});
+arr[2]();
+
+/* Sum input numbers. */
+function sumInput(){
+	let array = Array();
+	let number;
+	while(isFinite(number = prompt("Please enter a number.", 10))) array.push(Number(number));
+	let sum;
+	for(let value of array) sum += value;
+	return sum;
 }
 
-alert(ucFirst("aaa"));
-
-/* Check for spam. */
-function checkSpam(string){
-	let lowerCase = string.toLowerCase();
-	return lowerCase.includes("viagra") || lowerCase.includes("xxx");
-}
-
-/* Truncate the text. */
-function truncate(string, maxLength){
-	if(string.length > maxLength){
-		if(maxLength < 3){
-			return string.substring(0, 3);
-		}else{
-			let truncated = string.substring(0, maxLength - 3);
-			truncated += "...";
-			return truncated;
-		}
+/* A maximal subarray. */
+function getMaxSubSum(arr){
+	let maxSum = 0;
+	let partialSum = 0;
+	for(let item of arr){
+		partialSum += item;
+		maxSum = Math.max(maxSum, partialSum);
+		if(partialSum < 0) partialSum = 0;
 	}
-	
-	return string;
-}
-
-/* Extract the money. */
-function extractCurrencyValue(string){
-	return Number(string.slice(1));
+	return maxSum;
 }
