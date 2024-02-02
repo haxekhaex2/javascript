@@ -1,21 +1,23 @@
 "use strict";
 
-/* Store "unread" flags. */
+/* Sum the properties. */
+let salaries = {
+  "John": 100,
+  "Pete": 300,
+  "Mary": 250
+};
 
-let messages = [
-  {text: "Hello", from: "John"},
-  {text: "How goes?", from: "John"},
-  {text: "See you soon", from: "Alice"}
-];
+function sumSalaries(salaries){
+	let sum = 0;
+	for(let salary of Object.values(salaries)){
+		sum += Number(salary);
+	}
+	return sum;
+}
 
-let readMessages = new WeakSet();
-readMessages.add(messages[0]);
-readMessages.add(messages[1]);
+alert(sumSalaries(salaries));
 
-readMessages.add(messages[0]);
-alert("Read message 0:" + readMessages.has(messages[0]));
-
-/* Store read dates. */
-let readMap = new WeakMap();
-
-readMap.set(messages[0], new Date(2017, 1, 1));
+/* Count properties. */
+function count(object){
+	return Object.values(object).length;
+}
