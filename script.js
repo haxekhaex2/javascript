@@ -1,23 +1,33 @@
 "use strict";
 
-/* Sum the properties. */
-let salaries = {
-  "John": 100,
-  "Pete": 300,
-  "Mary": 250
+/* Destructuring assignment. */
+let user = {
+	name: "John",
+	years: 30
 };
 
-function sumSalaries(salaries){
-	let sum = 0;
-	for(let salary of Object.values(salaries)){
-		sum += Number(salary);
+let {name, age: years, isAdmin = false} = user;
+
+/* The maximal salary. */
+let salaries = {
+	"John": 100,
+	"Pete": 300,
+	"Mary": 250
+};
+
+function topSalary(salaries){
+	if(salaries == null) return null;
+	if(Object.entries(salaries).length === 0) return null;
+	
+	let persons = new Array();
+	let max = 0;
+	for(let [key, value] of Object.entries(salaries)){
+		if(value > max){
+			max = value;
+			(persons = new Array()).push(key);
+		}else if(value === max){
+			persons.push(key);
+		}
 	}
-	return sum;
-}
-
-alert(sumSalaries(salaries));
-
-/* Count properties. */
-function count(object){
-	return Object.values(object).length;
+	return persons;
 }
