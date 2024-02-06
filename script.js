@@ -1,32 +1,87 @@
 "use strict";
 
-/* Turn the object into JSON and back. */
-let user = {
-	name: "John Smith",
-	age: 35
+/* Sum all numbers till the given one. */
+function nonRecursiveSum(x){
+	let y = 0;
+	for(let i = 0; i <= x; i++){
+		y += i;
+	}
+	return y;
+}
+
+function recursiveSum(x){
+	return x > 1 ? recursiveSum(x - 1) : 1;
+}
+
+function recursiveProgression(x){
+	return x * (x + 1)  / 2;
+}
+
+/* Calculate factorial. */
+function factorial(x){
+	return x > 1 ? x * factorial(x - 1) : 1;
+}
+
+/* Fibonacci sequence. */
+function fibonacci(x){
+	let now = 1;
+	let prev = 1;
+	for(let i = 0; i < x - 1; i++){
+		let neW = now + prev;
+		prev = now;
+		now = neW;
+	}
+	return prev;
+}
+
+/* Output a single-linked list. */
+let list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null
+      }
+    }
+  }
 };
 
-let userJSON = JSON.stringify(user);
-let userParsed = JSON.parse(userJSON);
+function nonRecursionPrintList(list){
+	while(list.next){
+		console.log(list.value);
+		list = list.next;
+	}
+}
 
-console.log(userParsed.name + ", " + userJSON);
+function recursionPrintList(list){
+	console.log(list.value);
+	if(list.next) recursionPrintList(list.next);
+}
 
-/* Exclude backreference. */
-let room = {
-  number: 23
-};
+/* Output a single-linked list in reverse. */
+function nonRecursionReversePrintList(list){
+	let array = new Array();
+	array.push(list.value);
+	while(list.next){
+		list = list.next;
+		array.push(list.value);
+	}
+	console.log(array.reverse().toString());
+}
 
-let meetup = {
-  title: "Conference",
-  occupiedBy: [{name: "John"}, {name: "Alice"}],
-  place: room
-};
+function recursionReversePrintList(list, array = null){
+	if(array == null){
+		let array = new Array();
+		recursionReversePrintList(list, array);
+		console.log(array.reverse().toString());
+	}else{
+		array.push(list.value);
+		if(list.next) recursionReversePrintList(list.next, array);
+	}
+}
 
-// circular references
-room.occupiedBy = meetup;
-meetup.self = meetup;
-
-alert(JSON.stringify(meetup, function replacer(key, value){
-	var meetup = key === "" ? value : meetup;
-	return value === meetup ? undefined : value;
-}));
+nonRecursionReversePrintList(list);
+recursionReversePrintList(list);
