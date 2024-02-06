@@ -1,33 +1,32 @@
 "use strict";
 
-/* Destructuring assignment. */
+/* Turn the object into JSON and back. */
 let user = {
-	name: "John",
-	years: 30
+	name: "John Smith",
+	age: 35
 };
 
-let {name, age: years, isAdmin = false} = user;
+let userJSON = JSON.stringify(user);
+let userParsed = JSON.parse(userJSON);
 
-/* The maximal salary. */
-let salaries = {
-	"John": 100,
-	"Pete": 300,
-	"Mary": 250
+console.log(userParsed.name + ", " + userJSON);
+
+/* Exclude backreference. */
+let room = {
+  number: 23
 };
 
-function topSalary(salaries){
-	if(salaries == null) return null;
-	if(Object.entries(salaries).length === 0) return null;
-	
-	let persons = new Array();
-	let max = 0;
-	for(let [key, value] of Object.entries(salaries)){
-		if(value > max){
-			max = value;
-			(persons = new Array()).push(key);
-		}else if(value === max){
-			persons.push(key);
-		}
-	}
-	return persons;
-}
+let meetup = {
+  title: "Conference",
+  occupiedBy: [{name: "John"}, {name: "Alice"}],
+  place: room
+};
+
+// circular references
+room.occupiedBy = meetup;
+meetup.self = meetup;
+
+alert(JSON.stringify(meetup, function replacer(key, value){
+	var meetup = key === "" ? value : meetup;
+	return value === meetup ? undefined : value;
+}));
