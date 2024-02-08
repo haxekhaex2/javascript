@@ -1,87 +1,38 @@
 "use strict";
 
-/* Sum all numbers till the given one. */
-function nonRecursiveSum(x){
-	let y = 0;
-	for(let i = 0; i <= x; i++){
-		y += i;
-	}
-	return y;
+/* Sum with closures. */
+function sum(a){
+	return function(b){
+		return a + b;
+	};
 }
 
-function recursiveSum(x){
-	return x > 1 ? recursiveSum(x - 1) : 1;
-}
+/* Filter through function. */
+let arr = [1, 2, 3, 4, 5, 6, 7];
 
-function recursiveProgression(x){
-	return x * (x + 1)  / 2;
-}
-
-/* Calculate factorial. */
-function factorial(x){
-	return x > 1 ? x * factorial(x - 1) : 1;
-}
-
-/* Fibonacci sequence. */
-function fibonacci(x){
-	let now = 1;
-	let prev = 1;
-	for(let i = 0; i < x - 1; i++){
-		let neW = now + prev;
-		prev = now;
-		now = neW;
-	}
-	return prev;
-}
-
-/* Output a single-linked list. */
-let list = {
-  value: 1,
-  next: {
-    value: 2,
-    next: {
-      value: 3,
-      next: {
-        value: 4,
-        next: null
-      }
-    }
-  }
-};
-
-function nonRecursionPrintList(list){
-	while(list.next){
-		console.log(list.value);
-		list = list.next;
+function inBetween(a, b){
+	return function(element){
+		return index >= a && index < b;
 	}
 }
 
-function recursionPrintList(list){
-	console.log(list.value);
-	if(list.next) recursionPrintList(list.next);
+function inArray(givenElements){
+	return function(element){
+		return givenElements.includes(element);
+	};
 }
 
-/* Output a single-linked list in reverse. */
-function nonRecursionReversePrintList(list){
-	let array = new Array();
-	array.push(list.value);
-	while(list.next){
-		list = list.next;
-		array.push(list.value);
-	}
-	console.log(array.reverse().toString());
-}
+alert( arr.filter(inArray([1, 2, 10])) );
 
-function recursionReversePrintList(list, array = null){
-	if(array == null){
-		let array = new Array();
-		recursionReversePrintList(list, array);
-		console.log(array.reverse().toString());
-	}else{
-		array.push(list.value);
-		if(list.next) recursionReversePrintList(list.next, array);
+/* Sort by field. */
+let users = [
+  { name: "John", age: 20, surname: "Johnson" },
+  { name: "Pete", age: 18, surname: "Peterson" },
+  { name: "Ann", age: 19, surname: "Hathaway" }
+];
+
+function byField(field){
+	return function(a, b){
+		return a.field > b.field ? 1 : -1;
 	}
 }
-
-nonRecursionReversePrintList(list);
-recursionReversePrintList(list);
