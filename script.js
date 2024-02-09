@@ -1,35 +1,11 @@
 "use strict";
 
-/* Set and decrease for counter. */
-function counter(){
-	counter.number = 0;
-	
-	counter.set = function(x){
-		counter = x;
-	}
-	
-	counter.decrease = function(x){
-		return counter.number--;
-	}
-	
-	return counter.number++;
-	
+/* Print numbers. */
+function printNumbers(from, to){
+	console.log(from);
+	if(from != to) setTimeout(() => {printNumbers(from + 1, to);}, 1000);
 }
 
-/* Sum with an arbitrary amount of brackets. */
-function sum(a){
-	let currentSum = a;
-	
-	function f(b){
-		currentSum += b;
-		return f;
-	}
-	
-	f.toString = function(){
-		return currentSum;
-	}
-	
-	return f;
+function printNumbersSetInterval(from, to){
+	let timerId = setInterval((from, to) => {if(from === to){clearInterval(timerId); return;} console.log(from, to); from++;});
 }
-
-alert(sum(0)(1)(2)(3)(4)(5));
