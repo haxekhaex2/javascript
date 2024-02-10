@@ -1,54 +1,39 @@
 "use strict";
 
-/* Spy decorator. */
-function spy(func){
-	function wrapper(...args){
-		wrapper.calls.push(args);
-		return func.apply(this, args);
+/* Fix a function that loses "this". */
+function askPassword(ok, fail){
+	let password = prompt("Password?", "");
+	if(password == "rockstar") ok();
+	else fail();
+}
+
+let user = {
+	name: "John",
+
+	loginOk(){
+		alert(`${this.name} logged in.`);
+	},
+
+	loginFail(){
+		alert(`${this.name} failed to log in.`);
 	}
+};
 
-	wrapper.calls = [];
+askPassword(user.loginOk.bind(user), user.loginFail.bind(user));
 
-	return wrapper;
+/* Partial application for login. */
+function askPassword(ok, fail){
+	let password = prompt("Password?", "");
+	if(password == "rockstar") ok();
+	else fail();
 }
 
-/* Delaying decorator. */
-function delay(func, ms){
-	return function(){
-		setTimeout(() => {func.apply(this, argruments);}, ms);
-	};
-}
+user = {
+	name: "John",
 
-/* Debounce decorator. */
-function debounce(f, ms){
-	let timeoutHandle = null;
-
-	return function(){
-		clearTimeout(timeoutHandle);
-		timeoutHandle = setTimeout(() => {
-			f.apply(this, arguments);
-		}, ms);
-	}
-}
-
-/* Throttle decorator. */
-function throttle(f, ms){
-	let counter = 0;
-	let timeoutHandle = null;
-	let thisArray = [];
-	let argumentsArray = [];
-	return function(){
-		counter++;
-		thisArray.push(this);
-		argumentsArray.push(arguments);
-		if(!timeoutHandle) timeoutHandle = setInterval(() => {
-			if(counter === 0){
-				clearTimeout(timeoutHandle);
-				timeoutHandle = null;
-				return;
-			}
-			f.apply(thisArray.shift(), argumentsArray.shift());
-			counter--;
-		}, ms);
+	login(result){
+		alert(this.name + (result ? "Logged in." : "Failed to log in."));
 	}
 }
+
+askPassword(user.login.bind(user, true), user.login.bind(user, false));
