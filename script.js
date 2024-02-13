@@ -1,22 +1,20 @@
 "use strict";
 
-/* Searching algorithm. */
-let head = {
-	glasses: 1,
+/* Add method "f.defer(ms)" to functions. */
+Function.prototype.defer = function(ms){
+	setTimeout(this, ms);
 };
 
-let table = {
-	pen: 3,
-	__proto__: head
-};
+function f(){
+	alert("Hello!");
+}
 
-let bed = {
-	sheet: 1,
-	pillow: 2,
-	__proto__: table
-};
+f.defer(1000);
 
-let pockets = {
-	money: 2000,
-	__proto__: bed
+/* Add decorating "defer()" to functions. */
+Function.prototype.defer = function(ms){
+	let f = this;
+	return function(...args){
+		setTimeout(() => {f.apply(this, args);}, ms);
+	}
 };
