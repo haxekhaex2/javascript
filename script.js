@@ -1,20 +1,14 @@
 "use strict";
 
-/* Add method "f.defer(ms)" to functions. */
-Function.prototype.defer = function(ms){
-	setTimeout(this, ms);
-};
+/* Add toString to the dictionary. */
+let dictionary = Object.create(null);
 
-function f(){
-	alert("Hello!");
-}
+Object.defineProperty(dictionary, "toString", {
+	value: function(){
+		return Object.keys(this).join(", ");
+	},
+	enumerable: false
+});
 
-f.defer(1000);
-
-/* Add decorating "defer()" to functions. */
-Function.prototype.defer = function(ms){
-	let f = this;
-	return function(...args){
-		setTimeout(() => {f.apply(this, args);}, ms);
-	}
-};
+dictionary.apple = "Apple";
+dictionary.__proto__ = "__test__"; /* __proto__ is a regular property key here. */
