@@ -54,4 +54,54 @@ function createTree(data){
 	return ul;
 }
 
+/* Create a calendar. */
+function createCalendar(elem, year, month){
+	let table = document.createElement("table");
+	let thead = document.createElement("thead");
+	table.appendChild(thead);
+	let tbody = document.createElement("tbody");
+	table.appendChild(tbody);
+	elem.appendChild(table);
+
+	for(let i = 0; i < 7; i++){
+		let weekday = document.createElement("tr");
+		let weekdayh = document.createElement("th");
+		thead.appendChild(weekday);
+		weekday.appendChild(weekdayh);
+		switch(i){
+			case 0:
+				weekdayh.innerText = "SUNDAY";
+				break;
+			case 1:
+				weekdayh.innerText = "MONDAY";
+				break;
+			case 2:
+				weekdayh.innerText = "TUESDAY";
+				break;
+			case 3:
+				weekdayh.innerText = "WEDNESDAY";
+				break;
+			case 4:
+				weekdayh.innerText = "THURSDAY";
+				break;
+			case 5:
+				weekdayh.innerText = "FRIDAY";
+				break;
+			case 6:
+				weekdayh.innerText = "SATURDAY";
+				break;
+		}
+	}
+
+	for(let i = 0; i < 35; i++){
+		if(i % 7 == 0){
+			table.appendChild(document.createElement("tr"));
+		}
+
+		let day = new Date(year, month).getDay();
+		let td = document.createElement("td");
+		td.innerText = day;
+		tbody.lastChild.append(innerText);
+	}
+}
 
