@@ -1,107 +1,34 @@
 "use strict";
 
-/* Count descendants. */
-for(let listItem in document.querySelectorAll("li")){
-    console.log(listItem.data + Array.from(listItem.querySelectorall("li")).length);
+/* Find bottom scroll. */
+function scrollBottom(element){
+	/* Return how many pixels are not in view from the bottom. */
+	return element.scrollHeight - element.scrollTop - element.clientHeight;
 }
 
-/* Clear the element. */
-function clear(elem) {
-	elem.innerHTML = "";
+/* What's the scrollbar width? */
+function getScrollbarWidth(){
+	let div = document.createElement("div");
+	div.style.overflowY = "scroll";
+	div.style.width = "50px";
+	div.style.height = "50px";
+	
+	document.body.append(div); /* Let document size div and its components appropriately. */
+	let scrollWidth = div.offsetWidth - div.clientWidth; /* It's the size it takes up minus the size it has for content. */
+	
+	div.remove();
+	
+	return scrollWidth;
 }
 
-/* Create a list. */
-function createList(){
-	let ul = document.createElement("ul");
-	let pr;
-	while(pr = prompt("Enter list item text.", "Put text here."){
-		let li = document.createElement("li");
-		li.innerText = pr;
-		ul.append(li);
-	}
-	return ul;
-}
+alert(getScrollbarWidth());
 
-/* Create a tree. */
-let data = {
-  "Fish": {
-    "trout": {},
-    "salmon": {}
-  },
+/* Place the ball in the field center. */
+let field = document.getElementById("field");
+let fieldCenterX = field.clientWidth / 2;
+let fieldCenterY = field.clientWidth / 2;
+let ball = document.getElementById("ball");
+ball.style.left = Math.round(fieldCenterX - ball.offsetWidth / 2) + "px";
+ball.style.top = Math.round(fieldCenterY - ball.offsetHeight / 2) + "px";
 
-  "Tree": {
-    "Huge": {
-      "sequoia": {},
-      "oak": {}
-    },
-    "Flowering": {
-      "apple tree": {},
-      "magnolia": {}
-    }
-  }
-};
-
-createTree(data);
-
-function createTree(data){
-	let ul = document.createElement("ul");
-	for(let property of Object.keys(data)){
-		let li = document.createElement("li");
-		li.innerText = property;
-		li.appendChild(createTree(data[property]));
-		ul.appendChild(li);
-	}
-	return ul;
-}
-
-/* Create a calendar. */
-function createCalendar(elem, year, month){
-	let table = document.createElement("table");
-	let thead = document.createElement("thead");
-	table.appendChild(thead);
-	let tbody = document.createElement("tbody");
-	table.appendChild(tbody);
-	elem.appendChild(table);
-
-	for(let i = 0; i < 7; i++){
-		let weekday = document.createElement("tr");
-		let weekdayh = document.createElement("th");
-		thead.appendChild(weekday);
-		weekday.appendChild(weekdayh);
-		switch(i){
-			case 0:
-				weekdayh.innerText = "SUNDAY";
-				break;
-			case 1:
-				weekdayh.innerText = "MONDAY";
-				break;
-			case 2:
-				weekdayh.innerText = "TUESDAY";
-				break;
-			case 3:
-				weekdayh.innerText = "WEDNESDAY";
-				break;
-			case 4:
-				weekdayh.innerText = "THURSDAY";
-				break;
-			case 5:
-				weekdayh.innerText = "FRIDAY";
-				break;
-			case 6:
-				weekdayh.innerText = "SATURDAY";
-				break;
-		}
-	}
-
-	for(let i = 0; i < 35; i++){
-		if(i % 7 == 0){
-			table.appendChild(document.createElement("tr"));
-		}
-
-		let day = new Date(year, month).getDay();
-		let td = document.createElement("td");
-		td.innerText = day;
-		tbody.lastChild.append(innerText);
-	}
-}
 
